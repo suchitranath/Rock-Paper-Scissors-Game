@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rock Paper Scissors</title>
+  <style>
+    :root {
+      --bg: #12121f;
+      --card: #1f1f3f;
+      --surface: #25255c;
+      --primary: #6c5ce7;
+      --accent: #ffd369;
+      --text: #f7f7ff;
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      background: radial-gradient(circle at top, #3b3b79 0%, #12121f 60%);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .game-shell {
+      width: min(100%, 520px);
+      background: var(--card);
+      border-radius: 28px;
+      box-shadow: 0 24px 60px var(--shadow);
+      padding: 28px;
+    }
+
+    .game-shell header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .game-shell h1 {
+      font-size: clamp(2rem, 4vw, 2.6rem);
+      margin: 0;
+    }
+
+    .game-shell p {
+      margin: 12px auto 0;
+      color: #c8c8ff;
+      max-width: 88%;
+    }
+
+    .scoreboard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 22px 0 26px;
+    }
+
+    .score-card {
+      background: var(--surface);
+      border-radius: 18px;
+      padding: 18px 20px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .score-card strong {
+      display: block;
+      font-size: 1.75rem;
+      margin-bottom: 8px;
+    }
+
+    .choices {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 26px;
+    }
+
+    .choice-button {
+      width: 128px;
+      padding: 18px 0;
+      border: none;
+      border-radius: 18px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      box-shadow: inset 0 -1px 0 rgba(255,255,255,0.12), 0 12px 30px rgba(0,0,0,0.18);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .choice-button:hover,
+    .choice-button:focus {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 28px rgba(0,0,0,0.25);
+      outline: none;
+    }
+
+    .choice-button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .choice-button[data-choice="rock"] {
+      background: #7f5af0;
+    }
+    .choice-button[data-choice="paper"] {
+      background: #00bcd4;
+    }
+    .choice-button[data-choice="scissors"] {
+      background: #f76b8a;
+    }
+
+    .result-panel {
+      padding: 20px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+    }
+
+    .result-panel h2 {
+      margin: 0 0 10px;
+      font-size: 1.35rem;
+    }
+
+    .result-details {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .result-details span {
+      display: block;
+      font-size: 0.98rem;
+      color: #d1d1ff;
+    }
+
+    .result-panel .win {
+      color: #7ee787;
+    }
+
+    .result-panel .lose {
+      color: #ff8b8b;
+    }
+
+    .reset-button {
+      margin-top: 20px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: transparent;
+      color: var(--text);
+      padding: 12px 18px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .reset-button:hover {
+      background: rgba(255,255,255,0.08);
+    }
+  </style>
+</head>
+<body>
+  <div class="game-shell">
+    <header>
+      <h1>Rock Paper Scissors</h1>
+      <p>Choose your move and beat the computer. Keep score and play again anytime.</p>
+    </header>
+
+    <div class="scoreboard">
+      <div class="score-card">
+        <strong id="player-score">0</strong>
+        Player Score
+      </div>
+      <div class="score-card">
+        <strong id="computer-score">0</strong>
+        Computer Score
+      </div>
+    </div>
+
+    <div class="choices">
+      <button class="choice-button" data-choice="rock">Rock</button>
+      <button class="choice-button" data-choice="paper">Paper</button>
+      <button class="choice-button" data-choice="scissors">Scissors</button>
+    </div>
+
+    <div class="result-panel">
+      <h2 id="result-heading">Make your move</h2>
+      <div class="result-details">
+        <span id="player-choice">Player choice: �</span>
+        <span id="computer-choice">Computer choice: �</span>
+        <span id="result-message">First to 5 wins!</span>
+      </div>
+      <button class="reset-button" id="reset-button">Reset Game</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
